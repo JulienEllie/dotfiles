@@ -1,3 +1,4 @@
 key.txt.age
 LICENSE
 README
+.config/nvim/lazy-lock.json
