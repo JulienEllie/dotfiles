@@ -2,8 +2,8 @@ packages:
   darwin:
     brews:
       - "age"
-      - "at"
       - "awscli"
+      - "bat"
       - "chezmoi"
       - "fd"
       - "fontconfig"
