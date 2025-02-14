@@ -17,6 +17,7 @@ Host ubuntunas
 
 Host github.com
   AddKeysToAgent yes
+  User git
   IdentityFile ~/.ssh/github
 
    
