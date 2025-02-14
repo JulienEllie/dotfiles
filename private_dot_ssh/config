@@ -5,7 +5,7 @@ Include ~/.orbstack/ssh/config
 
 Host shopmac
   HostName shopmac
-  User juliene
+  User julien
   AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519
 
