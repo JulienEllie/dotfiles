@@ -2,7 +2,7 @@
 alias ll="ls -larht"
 
 # list in color
-alias ls="ls --color"
+alias ls="eza --no-filesize --grid --color=always --icons=always --no-user"
 
 # show confirm prompt
 alias rm="rm -i"
@@ -12,6 +12,10 @@ alias cdd='cd "$HOME/Documents"'
 
 # show all history lines
 alias history="history 1"
+
+
+alias tree="tree -L 3 -a -I '.git' --charset X"
+alias dtree="tree -L 3 -a -d -I '.git' --charset X"
 
 # set the locale of the shell
 export LANG="en_US.UTF-8"
@@ -38,17 +42,22 @@ export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE="100000"
 export SAVEHIST="$HISTSIZE"
 
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 # fzf parameters used in all widgets - configure layout and wrapped the preview results (useful in large command rendering)
-export FZF_DEFAULT_OPTS="--height 100% --layout reverse --preview-window=wrap"
+export FZF_DEFAULT_OPTS="--height 50% --layout reverse --border --preview-window=wrap"
 
 # CTRL + R: put the selected history command in the preview window - "{}" will be replaced by item selected in fzf execution runtime
 export FZF_CTRL_R_OPTS="--preview 'echo {}'"
 
 # CTRL + T: set "fd-find" as search engine instead of "find" and exclude .git for the results
-export FZF_CTRL_T_COMMAND="fd --exclude .git --ignore-file $HOME/.my-custom-zsh/.fd-fzf-ignore"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # CTRL + T: put the file content if item select is a file, or put tree command output if item selected is directory
 export FZF_CTRL_T_OPTS="--preview '[ -d {} ] && tree -C {} || bat --color=always --style=numbers {}'"
+
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
 
 # disable CTRL + S and CTRL + Q
 stty -ixon
@@ -109,10 +118,12 @@ bindkey "^[[3~" delete-char
 bindkey "^@" fzf-file-widget
 
 # load fzf keybindings and completions
+eval "$(zoxide init zsh)"
+
+# load fzf keybindings and completions
 eval "$(fzf --zsh)"
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 eval "$(starship init zsh)"

@@ -1,10 +1,12 @@
 packages:
   darwin:
     brews:
+      - "7-zip"
       - "age"
       - "awscli"
       - "bat"
       - "chezmoi"
+      - "eza"
       - "fd"
       - "fontconfig"
       - "fzf"
@@ -12,15 +14,18 @@ packages:
       - "git"
       - "go"
       - "lazygit"
+      - "mas"
       - "neovim"
       - "ripgrep"
       - "rust"
       - "starship"
+      - "tlrc"
       - "tree"
       - "typescript"
       - "vim"
+      - "yazi"
+      - "zoxide"
       - "zsh-autosuggestions"
-      - "zsh-autocomplete"
       - "zsh-syntax-highlighting"
     casks:
       - "1password"
