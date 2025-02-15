@@ -1,4 +1,28 @@
+{{- $osID := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- $email := promptStringOnce . "email" "Email address" "julien_ellie@hotmail.com" -}}
+
 encryption = "age"
+
 [age]
-  identity = "~/.config/chezmoi/key.txt"
-  recipient = "age1qh0vlwrllsvmcukfwdcn23mac94djf3vlw0u90lwa9hxux4wuqpslma09z"
+identity = "~/.config/chezmoi/key.txt"
+recipient = "age1qh0vlwrllsvmcukfwdcn23mac94djf3vlw0u90lwa9hxux4wuqpslma09z"
+
+[data]
+email = {{ $email | quote }}
+
+[data.os]
+id = {{ $osID | quote }}
+darwin = {{ (eq .chezmoi.os "darwin") }}
+freebsd = {{ (eq .chezmoi.os "freebsd") }}
+linux = {{ (eq .chezmoi.os "linux") }}
+unix = {{ (eq .chezmoi.os "darwin" "freebsd" "linux") }}
+windows = {{ (eq .chezmoi.os "windows") }}
+wsl = {{ (and
+  (eq .chezmoi.os "linux")
+  (.chezmoi.kernel.osrelease | lower | contains "microsoft")
+) | not | not }}
+

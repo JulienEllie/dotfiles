@@ -2,3 +2,6 @@ key.txt.age
 LICENSE
 README
 .config/nvim/lazy-lock.json
+{{- if eq .chezmoi.hostname "6c7e67b98252" }}
+.ssh/config # ignore ssh config on work laptop
+{{- end }}
