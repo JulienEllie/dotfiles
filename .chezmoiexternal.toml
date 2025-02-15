@@ -1,0 +1,4 @@
+# EXTERNAL REPOSITORIES
+[".cache/tpm/tpm"]
+url = "https://github.com/tmux-plugins/tpm"
+type = "git-repo"
