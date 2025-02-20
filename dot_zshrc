@@ -1,5 +1,5 @@
 # list files with details
-alias ll="ls -larht"
+alias ll="eza --long --header --icons --git --all"
 
 # list in color
 alias ls="eza --no-filesize --grid --color=always --icons=always --no-user"
