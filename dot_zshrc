@@ -61,6 +61,8 @@ export FZF_CTRL_T_OPTS="--preview '[ -d {} ] && tree -C {} || bat --color=always
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
+# set autocomplete cache somewhere nicer
+autoload -U compinit && compinit -d ~/.config/zsh/caches/zcompdump
 
 # disable CTRL + S and CTRL + Q
 stty -ixon
