@@ -4,16 +4,23 @@
 	email = {{ .email | quote }}
 	signingkey = ~/.ssh/github-sign.pub
 [gpg]
-	format = ssh
+  format = ssh
 [commit]
-	gpgsign = true
+  gpgsign = true
 [init]
-	defaultBranch = mainline
+  defaultBranch = mainline
 [color]
-        ui = auto
+  ui = auto
 [core]
-        pager = less -FMRiX
+  pager = delta
+  # pager = less -FMRiX
+[delta]
+  navigate = true
+[merge]
+  conflictstyle = diff3
+[diff]
+  colorMoved = default
 [push]
-        default = simple
+  default = simple
 [alias]
-        dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+  dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order

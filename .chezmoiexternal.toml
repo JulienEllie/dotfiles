@@ -2,3 +2,6 @@
 [".cache/tpm/tpm"]
 url = "https://github.com/tmux-plugins/tpm"
 type = "git-repo"
+[".cache/fzf/fzf-git.sh"]
+url = "https://github.com/junegunn/fzf-git.sh.git"
+type = "git-repo"
