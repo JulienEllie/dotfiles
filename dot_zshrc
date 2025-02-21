@@ -61,6 +61,17 @@ export FZF_CTRL_T_OPTS="--preview '[ -d {} ] && tree -C {} || bat --color=always
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+# fzf git plugin
+source ~/.cache/fzf/fzf-git.sh/fzf-git.sh
+
 # set autocomplete cache somewhere nicer
 autoload -U compinit && compinit -d ~/.config/zsh/caches/zcompdump
 
