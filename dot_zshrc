@@ -56,7 +56,7 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # CTRL + T: put the file content if item select is a file, or put tree command output if item selected is directory
-export FZF_CTRL_T_OPTS="--preview '[ -d {} ] && tree -C {} || bat --color=always --style=numbers {}'"
+export FZF_CTRL_T_OPTS="--preview '[ -d {} ] && tree -C {} || bat --color=always --line-range :500 --style=numbers {}'"
 
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
@@ -67,6 +67,18 @@ _fzf_compgen_path() {
 
 _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
+}
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}" "$@" ;;
+    ssh)          fzf --preview 'dig {}' "$@" ;;
+    *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
+  esac
 }
 
 # fzf git plugin
@@ -141,6 +153,9 @@ eval "$(zoxide init zsh)"
 
 # load fzf keybindings and completions
 eval "$(fzf --zsh)"
+
+eval $(thefuck --alias)
+eval $(thefuck --alias fk)
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

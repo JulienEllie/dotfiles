@@ -23,6 +23,7 @@ packages:
       - "ripgrep"
       - "rust"
       - "starship"
+      - "thefuck"
       - "tlrc"
       - "tree"
       - "typescript"
