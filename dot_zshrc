@@ -21,7 +21,7 @@ alias tree="tree -L 3 -a -I '.git' --charset X"
 alias dtree="tree -L 3 -a -d -I '.git' --charset X"
 
 
-alias t='tmux new -s $(hostname)'
+alias t='tmux new-session -A -s $(hostname)'
 
 # set the locale of the shell
 export LANG="en_US.UTF-8"
