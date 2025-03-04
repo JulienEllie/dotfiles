@@ -13,3 +13,7 @@ cask {{ . | quote }}
 {{ end -}}
 EOF
 {{ end -}}
+
+brew autoupdate delete
+brew autoupdate start --cleanup --upgrade --sudo
+
