@@ -16,6 +16,7 @@ alias cdd='cd "$HOME/Documents"'
 # show all history lines
 alias history="history 1"
 
+alias df="df -h"
 
 alias tree="tree -L 3 -a -I '.git' --charset X"
 alias dtree="tree -L 3 -a -d -I '.git' --charset X"
@@ -164,3 +165,5 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(starship init zsh)"
+
+neofetch
