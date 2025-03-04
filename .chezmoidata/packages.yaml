@@ -1,5 +1,7 @@
 packages:
   darwin:
+    taps:
+      - "domt4/autoupdate"
     brews:
       - "7-zip"
       - "age"
@@ -20,6 +22,7 @@ packages:
       - "mas"
       - "neofetch"
       - "neovim"
+      - "pinentry-mac"
       - "ripgrep"
       - "rust"
       - "starship"
