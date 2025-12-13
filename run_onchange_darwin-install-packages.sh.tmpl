@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --file=/dev/stdin <<EOF
 {{ range .packages.darwin.taps -}}
 tap {{ . | quote }}
 {{ end -}}
@@ -13,8 +13,4 @@ cask {{ . | quote }}
 {{ end -}}
 EOF
 {{ end -}}
-
-mkdir -p /Users/julien/Library/LaunchAgents
-brew autoupdate delete
-brew autoupdate start --cleanup --upgrade --sudo
 
