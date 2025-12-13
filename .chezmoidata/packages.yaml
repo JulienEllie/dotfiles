@@ -1,11 +1,8 @@
 packages:
   darwin:
-    taps:
-      - "domt4/autoupdate"
     brews:
       - "7-zip"
       - "age"
-      - "awscli"
       - "bat"
       - "btop"
       - "chezmoi"
@@ -26,7 +23,6 @@ packages:
       - "ripgrep"
       - "rust"
       - "starship"
-      - "thefuck"
       - "tlrc"
       - "tree"
       - "typescript"
@@ -37,11 +33,7 @@ packages:
       - "zsh-syntax-highlighting"
     casks:
       - "1password"
-      - "corretto"
-      - "discord"
       - "font-hack-nerd-font"
       - "font-meslo-lg-nerd-font"
       - "ghostty"
-      - "signal"
       - "spotify"
-      - "zen-browser"
