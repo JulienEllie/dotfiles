@@ -1,5 +1,6 @@
 packages:
   darwin:
+    taps:
     brews:
       - "7-zip"
       - "age"
