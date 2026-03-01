@@ -7,7 +7,6 @@ packages:
       - "bat"
       - "btop"
       - "chezmoi"
-      - "curlie"
       - "dua-cli"
       - "eza"
       - "fd"
