@@ -1,8 +1,8 @@
 # list files with details
-alias ll="eza --long --header --icons --git --all"
+alias ll="eza --long --header --icons --git --all --group-directories-first --time-style=relative"
 
 # list in color
-alias ls="eza --no-filesize --grid --color=always --icons=always --no-user"
+alias ls="eza --no-filesize --grid --color=always --icons=always --no-user --group-directories-first"
 
 # show confirm prompt
 alias rm="rm -i"
@@ -86,10 +86,14 @@ _fzf_comprun() {
 }
 
 # fzf git plugin
-source ~/.cache/fzf/fzf-git.sh/fzf-git.sh
+[[ -f ~/.cache/fzf/fzf-git.sh/fzf-git.sh ]] && source ~/.cache/fzf/fzf-git.sh/fzf-git.sh
 
-# set autocomplete cache somewhere nicer
-autoload -U compinit && compinit -d ~/.config/zsh/caches/zcompdump
+if type brew &>/dev/null; then
+  FPATH="/opt/homebrew/share/zsh-completions:${FPATH}"
+  # set autocomplete cache somewhere nicer
+  autoload -Uz compinit && compinit -u -d ~/.config/zsh/caches/zcompdump
+fi
+
 
 # use bat for colorizing man pages
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
@@ -100,14 +104,14 @@ stty -ixon
 # enable comments "#" expressions in the prompt shell
 setopt INTERACTIVE_COMMENTS
 
-# append new history entries to the history file
-setopt APPEND_HISTORY
+# share history across all active sessions in real time
+setopt SHARE_HISTORY
 
-# save each command to the history file as soon as it is executed
-setopt INC_APPEND_HISTORY
+# remove older duplicates from history, keeping the most recent occurrence
+setopt HIST_IGNORE_ALL_DUPS
 
-# ignore recording duplicate consecutive commands in the history
-setopt HIST_IGNORE_DUPS
+# trim extra whitespace from history entries
+setopt HIST_REDUCE_BLANKS
 
 # ignore commands that start with a space in the history
 setopt HIST_IGNORE_SPACE
@@ -149,18 +153,21 @@ bindkey '^[[Z' reverse-menu-complete
 # delete characters using the "delete" key
 bindkey "^[[3~" delete-char
 
-# fzf alias: CTRL + SPACE (gadget parameters configured in the FZF_CTRL_T_COMMAND environment variable)
 bindkey "^@" fzf-file-widget
 
-# load fzf keybindings and completions
+# smart cd with zoxide
 eval "$(zoxide init zsh)"
 
 # load fzf keybindings and completions
 eval "$(fzf --zsh)"
+
+eval "$(thefuck --alias fk)"
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(starship init zsh)"
 
-neofetch
+# only show neofetch in the first terminal, not in tmux panes or nested shells
+[[ -z "$TMUX" && -z "$VSCODE_PID" ]] && neofetch
+
