@@ -166,6 +166,6 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(starship init zsh)"
 
-# only show neofetch in the first terminal, not in tmux panes or nested shells
-[[ -z "$TMUX" && -z "$VSCODE_PID" ]] && neofetch
+# only show fastfetch in the first terminal, not in tmux panes or nested shells
+[[ -z "$TMUX" && -z "$VSCODE_PID" ]] && fastfetch
 
