@@ -37,11 +37,17 @@ if [ ! -d "$HOME/.sdkman" ]; then
   curl -fsSL "https://get.sdkman.io?rcupdate=false" | bash
 fi
 
-# install Java + Kotlin via SDKMAN! (no-op if already installed)
+# install latest Amazon Corretto + latest Kotlin via SDKMAN! (no-op if already installed)
 if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
   # shellcheck disable=SC1091
   source "$HOME/.sdkman/bin/sdkman-init.sh"
-  yes | sdk install java || true
+  corretto=$(sdk list java 2>/dev/null \
+    | awk -F'|' '/amzn/ && !/ea/ {gsub(/[[:space:]]/,"",$NF); print $NF}' \
+    | sort -V | tail -1)
+  if [ -n "$corretto" ]; then
+    yes | sdk install java "$corretto" || true
+    sdk default java "$corretto" || true
+  fi
   yes | sdk install kotlin || true
 fi
 {{ end -}}
