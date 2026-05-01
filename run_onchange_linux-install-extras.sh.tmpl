@@ -11,15 +11,15 @@ case " ${ID:-} ${ID_LIKE:-} " in
   *) exit 0 ;;
 esac
 
-GO_VERSION="{{ .packages.linux.extras.go_version }}"
 ARCH=$(dpkg --print-architecture)
 
-# Go: pinned tarball install to /usr/local/go (bump go_version in packages.yaml to upgrade)
-if ! /usr/local/go/bin/go version 2>/dev/null | grep -q "go${GO_VERSION} "; then
-  echo "installing Go ${GO_VERSION} (${ARCH})..."
+# Go: install latest stable from go.dev (re-run script with --force to upgrade)
+GO_LATEST=$(curl -fsSL "https://go.dev/VERSION?m=text" | head -n1 | sed 's/^go//')
+if ! /usr/local/go/bin/go version 2>/dev/null | grep -q "go${GO_LATEST} "; then
+  echo "installing Go ${GO_LATEST} (${ARCH})..."
   tmp=$(mktemp -d)
   trap 'rm -rf "$tmp"' EXIT
-  curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz" -o "${tmp}/go.tar.gz"
+  curl -fsSL "https://go.dev/dl/go${GO_LATEST}.linux-${ARCH}.tar.gz" -o "${tmp}/go.tar.gz"
   sudo rm -rf /usr/local/go
   sudo tar -C /usr/local -xzf "${tmp}/go.tar.gz"
 fi

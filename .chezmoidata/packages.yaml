@@ -75,5 +75,3 @@ packages:
       - "zoxide"
       - "zsh-autosuggestions"
       - "zsh-syntax-highlighting"
-    extras:
-      go_version: "1.26.2"
