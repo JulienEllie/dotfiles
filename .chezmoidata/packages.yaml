@@ -50,6 +50,7 @@ packages:
       - "age"
       - "bat"
       - "btop"
+      - "build-essential"
       - "eza"
       - "fastfetch"
       - "fd-find"
