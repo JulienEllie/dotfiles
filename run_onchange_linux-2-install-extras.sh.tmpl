@@ -31,6 +31,17 @@ if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
     | sh -s -- -y --default-toolchain stable --no-modify-path
 fi
 
+# uv: user-scoped Python toolchain (run `uv self update` to upgrade)
+if [ ! -x "$HOME/.local/bin/uv" ]; then
+  echo "installing uv..."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+# Python tools used by LazyVim (run `uv tool upgrade --all` to upgrade)
+if [ -x "$HOME/.local/bin/uv" ]; then
+  "$HOME/.local/bin/uv" tool install --quiet ruff || true
+fi
+
 # SDKMAN!: user-scoped JVM ecosystem manager (run `sdk update` to upgrade)
 if [ ! -d "$HOME/.sdkman" ]; then
   echo "installing SDKMAN!..."
