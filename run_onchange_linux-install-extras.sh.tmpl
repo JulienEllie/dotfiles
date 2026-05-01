@@ -1,0 +1,47 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -eo pipefail
+
+if [ ! -r /etc/os-release ]; then
+  exit 0
+fi
+. /etc/os-release
+case " ${ID:-} ${ID_LIKE:-} " in
+  *" debian "*|*" ubuntu "*) ;;
+  *) exit 0 ;;
+esac
+
+GO_VERSION="{{ .packages.linux.extras.go_version }}"
+ARCH=$(dpkg --print-architecture)
+
+# Go: pinned tarball install to /usr/local/go (bump go_version in packages.yaml to upgrade)
+if ! /usr/local/go/bin/go version 2>/dev/null | grep -q "go${GO_VERSION} "; then
+  echo "installing Go ${GO_VERSION} (${ARCH})..."
+  tmp=$(mktemp -d)
+  trap 'rm -rf "$tmp"' EXIT
+  curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz" -o "${tmp}/go.tar.gz"
+  sudo rm -rf /usr/local/go
+  sudo tar -C /usr/local -xzf "${tmp}/go.tar.gz"
+fi
+
+# rustup: user-scoped, manages toolchains itself (run `rustup update` to upgrade)
+if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+  echo "installing rustup..."
+  curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs \
+    | sh -s -- -y --default-toolchain stable --no-modify-path
+fi
+
+# SDKMAN!: user-scoped JVM ecosystem manager (run `sdk update` to upgrade)
+if [ ! -d "$HOME/.sdkman" ]; then
+  echo "installing SDKMAN!..."
+  curl -fsSL "https://get.sdkman.io?rcupdate=false" | bash
+fi
+
+# install Java + Kotlin via SDKMAN! (no-op if already installed)
+if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+  # shellcheck disable=SC1091
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+  yes | sdk install java || true
+  yes | sdk install kotlin || true
+fi
+{{ end -}}

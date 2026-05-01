@@ -36,6 +36,9 @@ export PATH="$PATH:$HOME/.cargo/bin"
 # add Go binaries to the PATH
 export PATH="$PATH:$HOME/go/bin"
 
+# linux Go toolchain (tarball install)
+[[ -d /usr/local/go/bin ]] && export PATH="$PATH:/usr/local/go/bin"
+
 # system wide cli
 export PATH="$PATH:/usr/local/bin"
 
@@ -173,6 +176,9 @@ for f in \
 done
 
 eval "$(starship init zsh)"
+
+# SDKMAN! (Java, Kotlin, Gradle, etc.) — must be sourced near end of rc
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # only show fastfetch in the first terminal, not in tmux panes or nested shells
 [[ -z "$TMUX" && -z "$VSCODE_PID" ]] && fastfetch
