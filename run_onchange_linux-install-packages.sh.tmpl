@@ -1,0 +1,25 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+if [ ! -r /etc/os-release ]; then
+  exit 0
+fi
+. /etc/os-release
+case " ${ID:-} ${ID_LIKE:-} " in
+  *" debian "*|*" ubuntu "*) ;;
+  *)
+    echo "skipping apt installer: not debian/ubuntu (ID=$ID)" >&2
+    exit 0
+    ;;
+esac
+
+packages=(
+{{ range .packages.linux.apt -}}
+  {{ . | quote }}
+{{ end -}}
+)
+
+sudo apt-get update
+sudo apt-get install -y "${packages[@]}"
+{{ end -}}
